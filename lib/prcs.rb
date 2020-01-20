@@ -10,8 +10,8 @@ module PRCS
     def initialize(command)
       @command = command
       @process = nil
-      @stdout = ""
-      @stderr = ""
+      @stdout = nil
+      @stderr = nil
 
       @external_queues = {}.tap do |it|
         it[:stdout] = Queue.new
