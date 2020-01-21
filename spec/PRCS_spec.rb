@@ -39,4 +39,12 @@ RSpec.describe PRCS do
     expect(prcs.stdout).to eq stdout
     expect(prcs.stderr).to eq stderr
   end
+
+  it "should wait" do
+    prcs = PRCS::Runner.new(["sleep", "5"]).run_and_wait!
+    sleep(0.2)
+
+    expect(prcs.alive?).to be false
+    expect(prcs.exit_code).to be 0
+  end
 end

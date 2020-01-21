@@ -68,6 +68,13 @@ module PRCS
       self
     end
 
+    def run_and_wait!
+      self.run!
+      @process.wait
+
+      self
+    end
+
     def kill!(timeout = 15)
       @logcollectors.values.each do |collector_thread|
         collector_thread[:running] = false
