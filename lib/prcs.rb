@@ -26,6 +26,7 @@ module PRCS
 
       ChildProcess.posix_spawn = true
       @process = ChildProcess.build(*@command)
+      @process.duplex = true
       @process.leader = true
       @process.io.stdout = stdout_wr
       @process.io.stderr = stderr_wr
@@ -76,6 +77,8 @@ module PRCS
     end
 
     def kill!(timeout = 15)
+      @process.io.stdin.close rescue nil
+
       @logcollectors.values.each do |collector_thread|
         collector_thread[:running] = false
       end
@@ -116,6 +119,10 @@ module PRCS
         rescue ThreadError
         end
       }.join
+    end
+
+    def stdin
+      @process.io.stdin
     end
 
     def stdout
