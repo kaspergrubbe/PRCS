@@ -37,7 +37,7 @@ module PRCS
       stderr_wr.close
 
       if stdin
-        @process.io.stdin(stdin)
+        @process.io.stdin.write(stdin)
         @process.io.stdin.close
       end
 
