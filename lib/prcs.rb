@@ -52,7 +52,6 @@ module PRCS
             Thread.current[:log] << output
           rescue IO::EAGAINWaitReadable, EOFError
           end
-          sleep(1)
         end
       end
 
@@ -67,7 +66,6 @@ module PRCS
             Thread.current[:log] << output
           rescue IO::EAGAINWaitReadable, EOFError
           end
-          sleep(1)
         end
       end
 
@@ -103,25 +101,25 @@ module PRCS
     end
 
     def stdout_queue
-      [].tap { |it|
+      "".tap { |it|
         begin
           while(true)
             it << @external_queues[:stdout].pop(true)
           end
         rescue ThreadError
         end
-      }.join
+      }
     end
 
     def stderr_queue
-      [].tap { |it|
+      "".tap { |it|
         begin
           while(true)
             it << @external_queues[:stderr].pop(true)
           end
         rescue ThreadError
         end
-      }.join
+      }
     end
 
     def stdin
