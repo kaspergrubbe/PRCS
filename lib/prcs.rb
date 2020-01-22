@@ -20,13 +20,13 @@ module PRCS
       @logcollectors = {}
     end
 
-    def run!
+    def run!(stdin = nil)
       stdout_pipe, stdout_wr = IO.pipe
       stderr_pipe, stderr_wr = IO.pipe
 
       ChildProcess.posix_spawn = true
       @process = ChildProcess.build(*@command)
-      @process.duplex = true
+      @process.duplex = true if stdin
       @process.leader = true
       @process.io.stdout = stdout_wr
       @process.io.stderr = stderr_wr
@@ -35,6 +35,11 @@ module PRCS
 
       stdout_wr.close
       stderr_wr.close
+
+      if stdin
+        @process.io.stdin(stdin)
+        @process.io.stdin.close
+      end
 
       @logcollectors[:stdout] = Thread.new(stdout_pipe) do |pipe|
         Thread.current[:running] = true
@@ -77,8 +82,6 @@ module PRCS
     end
 
     def kill!(timeout = 15)
-      @process.io.stdin.close rescue nil
-
       @logcollectors.values.each do |collector_thread|
         collector_thread[:running] = false
       end
