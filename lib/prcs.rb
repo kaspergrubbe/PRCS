@@ -50,7 +50,7 @@ module PRCS
             output = pipe.readline_nonblock
             @external_queues[:stdout] << output
             Thread.current[:log] << output
-          rescue IO::EAGAINWaitReadable, EOFError
+          rescue IO::EAGAINWaitReadable
           end
         end
       end
@@ -64,7 +64,7 @@ module PRCS
             output = pipe.readline_nonblock
             @external_queues[:stderr] << output
             Thread.current[:log] << output
-          rescue IO::EAGAINWaitReadable, EOFError
+          rescue IO::EAGAINWaitReadable
           end
         end
       end
