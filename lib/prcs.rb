@@ -27,7 +27,6 @@ module PRCS
       ChildProcess.posix_spawn = true
       @process = ChildProcess.build(*@command)
       @process.duplex = true if stdin
-      @process.leader = true
       @process.io.stdout = stdout_wr
       @process.io.stderr = stderr_wr
 
