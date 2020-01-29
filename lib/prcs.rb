@@ -7,6 +7,8 @@ module PRCS
   class Error < StandardError; end
 
   class Runner
+    attr_reader :command
+
     def initialize(command)
       @command = command
       @process = nil
