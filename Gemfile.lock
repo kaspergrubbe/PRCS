@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    prcs (0.1.0)
+    prcs (0.3.0)
       childprocess (~> 3.0, >= 3.0.0)
       ffi (~> 1.12)
 
