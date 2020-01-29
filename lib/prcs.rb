@@ -50,7 +50,7 @@ module PRCS
             @external_queues[:stdout] << output
             Thread.current[:log] << output
             sleep(0.1)
-          rescue IO::EAGAINWaitReadable
+          rescue IO::EAGAINWaitReadable, EOFError
           end
         end
       end
@@ -65,7 +65,7 @@ module PRCS
             @external_queues[:stderr] << output
             Thread.current[:log] << output
             sleep(0.1)
-          rescue IO::EAGAINWaitReadable
+          rescue IO::EAGAINWaitReadable, EOFError
           end
         end
       end
