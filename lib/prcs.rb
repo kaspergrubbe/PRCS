@@ -75,8 +75,8 @@ module PRCS
       self
     end
 
-    def run_and_wait!
-      self.run!
+    def run_and_wait!(stdin = nil)
+      self.run!(stdin)
       @process.wait
 
       self
